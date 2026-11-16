@@ -24,8 +24,11 @@ def max_profit(prices):
     #   ...
     # TODO: `prices[i]` is a stock price on day i. Return the most profit obtainable by
     #   buying on one day and selling on a LATER day. If no profit is possible, return 0.
-
-    pass
+    best = 0
+    for i in range(len(prices)):
+        for j in range(i + 1,len(prices)):
+            best = max(best, prices[j] - prices[i])
+    return best
 
 
 def max_subarray(nums):
@@ -33,7 +36,13 @@ def max_subarray(nums):
     #   ...
     # TODO: return the largest sum of any contiguous (in-a-row) block of numbers in
     #   `nums`. The list has at least one number.
-    pass
+    best = nums[0]
+    for i in range(len(nums)):
+        total = 0
+        for j in range(i, len(nums)):
+            total += nums[j]
+            best = max(best, total)
+    return best
 
 
 def is_balanced(s):   # Part 4 - stretch (optional)
@@ -41,7 +50,16 @@ def is_balanced(s):   # Part 4 - stretch (optional)
     #   ...
     # TODO: return True if every bracket in `s` is closed correctly and in the right
     #   order. The brackets are ( ) [ ] { }. (Hint: a list used as a stack works well.)
-    pass
+    brackets = {"(" : ")","[" : "]","{" : "}" }
+    stack = []
+    for c in s:
+        if c in brackets:                
+            stack.append(brackets[c])
+        elif c in ")]}":
+            if not stack or stack.pop() != c:
+                return False
+    return not stack
+    
 
 
 def main():
